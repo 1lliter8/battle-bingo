@@ -1,53 +1,58 @@
 [gd_scene load_steps=7 format=3 uid="uid://c7f1idqtrh0j2"]
 
-[ext_resource type="Texture2D" uid="uid://vtdvrvi7bf8a" path="res://resources/ball.svg" id="1_hadjo"]
+[ext_resource type="Script" path="res://scenes/foreground/ball/ball.gd" id="1_8w5sc"]
+[ext_resource type="Texture2D" uid="uid://d14gulvpg8hn6" path="res://resources/blue.png" id="2_qkee1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7lybv"]
-atlas = ExtResource("1_hadjo")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="CircleShape2D" id="CircleShape2D_4b5v5"]
+radius = 48.0104
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h8bib"]
-atlas = ExtResource("1_hadjo")
-region = Rect2(48, 0, 48, 48)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rlgvy"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_abluj"]
-atlas = ExtResource("1_hadjo")
-region = Rect2(96, 0, 48, 48)
+[sub_resource type="Animation" id="Animation_ll533"]
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.95, 0.95), Vector2(1, 1), Vector2(0.95, 0.95)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_47adl"]
-atlas = ExtResource("1_hadjo")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jkrf8"]
-animations = [{
-"frames": [{
-"duration": 15.0,
-"texture": SubResource("AtlasTexture_7lybv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h8bib")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_abluj")
-}, {
-"duration": 4.0,
-"texture": SubResource("AtlasTexture_47adl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_abluj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h8bib")
-}],
-"loop": true,
-"name": &"blob",
-"speed": 30.0
-}]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rxhe5"]
+_data = {
+"throb": SubResource("Animation_ll533")
+}
 
 [node name="Area2D" type="Area2D"]
+scale = Vector2(0.95, 0.95)
+script = ExtResource("1_8w5sc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_jkrf8")
-animation = &"blob"
-frame = 2
-frame_progress = 0.865932
+[node name="Ball" type="Sprite2D" parent="."]
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("2_qkee1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4b5v5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rlgvy"),
+"battle-bingo": SubResource("AnimationLibrary_rxhe5")
+}
+
+[node name="BallNumber" type="Label" parent="."]
+offset_left = -38.9474
+offset_top = -65.2632
+offset_right = 39.0526
+offset_bottom = 47.7368
+theme_override_font_sizes/font_size = 64
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 2

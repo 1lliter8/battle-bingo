@@ -1,2 +1,5 @@
+# My ignores
+raw/
+
 # Godot 4+ specific ignores
 .godot/

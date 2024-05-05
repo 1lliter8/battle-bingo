@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq4akl7m7dqax"]
+
+[ext_resource type="Texture2D" uid="uid://bgsgoei0fw5po" path="res://resources/tile.png" id="1_d1oyk"]
+
+[sub_resource type="GDScript" id="GDScript_bt4i7"]
+script/source = "extends Node
+
+var ball_count: int = 54
+var balls: Array[int] = []
+var ballScene = preload(\"res://scenes/foreground/ball/ball.tscn\")
+
+func _ready():
+	for i in range(ball_count):
+		var new_ball = ballScene.instantiate()
+		new_ball.set_number(i)
+		add_child(new_ball)
+		balls.append(new_ball)
+	
+	print(balls)
+"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bon50"]
+resource_name = "tile"
+texture = ExtResource("1_d1oyk")
+texture_region_size = Vector2i(100, 100)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_s7dde"]
+tile_size = Vector2i(100, 100)
+sources/0 = SubResource("TileSetAtlasSource_bon50")
+
+[node name="Main" type="Node"]
+script = SubResource("GDScript_bt4i7")
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(-40, -50)
+tile_set = SubResource("TileSet_s7dde")
+format = 2
+layer_0/tile_data = PackedInt32Array(65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 196613, 0, 0, 196612, 0, 0, 196611, 0, 0, 196610, 0, 0, 196609, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 262150, 0, 0, 196614, 0, 0, 131078, 0, 0, 65542, 0, 0, 393222, 0, 0, 458758, 0, 0, 524294, 0, 0, 589830, 0, 0, 655361, 0, 0, 655362, 0, 0, 655363, 0, 0, 655364, 0, 0, 655365, 0, 0, 655366, 0, 0)
